@@ -1,22 +1,10 @@
 import React, { useState } from 'react'
 import { TouchableWithoutFeedback, View, Text } from 'react-native'
-import { Icon, withStyles, Layout } from '@ui-kitten/components'
+import { Icon, withStyles, Layout, Button } from '@ui-kitten/components'
 import PasswordInput from '../input/PasswordInput'
 import TextInput from '../input/TextInput'
 
 const FormRegister = ({ eva, style, ...restProps }) => {
-    const [secureTextEntry, setSecureTextEntry] = useState(true)
-
-    const toggleSecureEntry = () => {
-        setSecureTextEntry(!secureTextEntry);
-    };
-
-    const renderIcon = (props) => (
-        <TouchableWithoutFeedback onPress={toggleSecureEntry}>
-            <Icon {...props} name={secureTextEntry ? 'eye-off' : 'eye'}/>
-        </TouchableWithoutFeedback>
-    );
-
     return (
         <View style={eva.style.container}>
             <View style={{ marginBottom: 40 }}>
@@ -44,6 +32,9 @@ const FormRegister = ({ eva, style, ...restProps }) => {
                     placeholder='password'
                     style={{ marginBottom: 15 }}
                 />
+                <Button>
+                    Sign up
+                </Button>
             </View>
         </View>
     )
