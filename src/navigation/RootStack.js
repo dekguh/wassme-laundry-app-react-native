@@ -7,20 +7,12 @@ import SplashScreen from '../components/screens/SplashScreen'
 import DashboardStack from './DashboardStack'
 import AuthStack from './AuthStack'
 import { updateIsLoadingAct, updateIsLoginAct } from '../redux/user/action'
-import { getJwtStorage, removeJwtStorage, setJwtStorage } from '../storage'
 
 const Stack = createNativeStackNavigator()
 
-const RootStack = ({ isLogin, isLoading, updateIsLogin, updateIsLoading }) => {
+const RootStack = ({ isLogin, isLoading, checkIsLogin }) => {
     useEffect(() => {
-        const checkJwt = async () => {
-            await removeJwtStorage()
-            const jwt = await getJwtStorage()
-            if(jwt) updateIsLogin(true)
-            if(!jwt) updateIsLogin(false)
-            return updateIsLoading(false)
-        }
-        setTimeout(() => checkJwt(), 3000)
+        setTimeout(() => checkIsLogin(), 3000)
     }, [])
 
     return (
@@ -43,6 +35,7 @@ const mapDispatchToProps = dispatch => {
     return {
         updateIsLogin: status => dispatch(updateIsLoginAct(status)),
         updateIsLoading: status => dispatch(updateIsLoadingAct(status)),
+        checkIsLogin: () => dispatch({ type: 'CHECK_IS_LOGIN' })
     }
 }
 
