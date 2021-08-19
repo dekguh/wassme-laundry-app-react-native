@@ -18,4 +18,16 @@ export async function registerApi(username, email, password) {
     }
 }
 
+export async function loginApi(email, password) {
+    try {
+        const response = await Api.post('auth/local', {
+            identifier: email,
+            password: password
+        })
+        return response.data
+    } catch(err) {
+        return err.response.data.message[0].messages[0]
+    }
+}
+
 export default Api
