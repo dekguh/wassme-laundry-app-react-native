@@ -7,6 +7,7 @@ import SplashScreen from '../components/screens/SplashScreen'
 import DashboardStack from './DashboardStack'
 import AuthStack from './AuthStack'
 import { updateIsLoadingAct, updateIsLoginAct } from '../redux/user/action'
+import LogoutScreen from '../components/screens/LogoutScreen'
 
 const Stack = createNativeStackNavigator()
 
@@ -20,6 +21,7 @@ const RootStack = ({ isLogin, isLoading, checkIsLogin }) => {
         {isLoading
         ? (<SplashScreen />)
         : isLogin ? (<DashboardStack />) : (<AuthStack />)}
+        <Stack.Screen name='Logout' component={LogoutScreen} />
     </NavigationContainer>
     )
 }

@@ -16,7 +16,9 @@ export const ThemedSplashContainerView = withStyles(SplashContainer, (theme) => 
         backgroundColor: theme['color-primary-500'],
         flex: 1,
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        zIndex: 99999,
+        elevation: 99999
     },
     title: {
         color: '#FFFFFF',
@@ -25,3 +27,5 @@ export const ThemedSplashContainerView = withStyles(SplashContainer, (theme) => 
         fontStyle: 'italic'
     }
 }))
+
+export default ThemedSplashContainerView
