@@ -20,7 +20,10 @@ const RootStack = ({ isLogin, isLoading, checkIsLogin }) => {
     <NavigationContainer>
         {isLoading
         ? (<SplashScreen />)
-        : isLogin ? (<DashboardStack />) : (<AuthStack />)}
+        : isLogin ? (
+            <DashboardStack />
+            )
+            : (<AuthStack />)}
         <Stack.Screen name='Logout' component={LogoutScreen} />
     </NavigationContainer>
     )
