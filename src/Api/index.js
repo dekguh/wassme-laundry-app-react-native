@@ -30,4 +30,12 @@ export async function loginApi(email, password) {
     }
 }
 
+export async function updateBillingApi(data = {}, token) {
+    try {
+        
+    } catch (err) {
+
+    }
+}
+
 export default Api

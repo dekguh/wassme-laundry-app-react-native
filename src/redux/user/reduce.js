@@ -1,8 +1,9 @@
-import { UPDATE_IS_LOADING, UPDATE_IS_LOGIN } from './action'
+import { UPDATE_IS_LOADING, UPDATE_IS_LOGIN, UPDATE_JWT } from './action'
 
 const initState = {
     isLogin: false,
-    isLoading: true
+    isLoading: true,
+    jwt: null
 }
 
 export default reduce = (state = initState, action) => {
@@ -16,6 +17,11 @@ export default reduce = (state = initState, action) => {
             return {
                 ...state,
                 isLoading: action.payload
+            }
+        case UPDATE_JWT:
+            return {
+                ...state,
+                jwt: action.payload
             }
         default:
             return state
