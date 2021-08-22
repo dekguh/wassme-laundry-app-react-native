@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, ScrollView, KeyboardAvoidingView, Platform } from 'react-native'
 import { withStyles, Button } from '@ui-kitten/components'
 import PasswordInput from '../input/PasswordInput'
 import TextInput from '../input/TextInput'
@@ -188,7 +188,8 @@ const FormRegister = ({ eva, style, ...restProps }) => {
     }
 
     return (
-        <View style={eva.style.container}>
+    <KeyboardAvoidingView style={eva.style.container} behavior={Platform.OS == 'ios' ? 'padding' : 'height'}>
+        <ScrollView>
             <View style={{ marginBottom: 40 }}>
                 <Text style={eva.style.title}>Hello, Welcome Back</Text>
                 <Text style={eva.style.description}>Please register for get access to dashboard</Text>
@@ -243,7 +244,8 @@ const FormRegister = ({ eva, style, ...restProps }) => {
                     : 'Sign up'}
                 </Button>
             </View>
-        </View>
+        </ScrollView>
+    </KeyboardAvoidingView>
     )
 }
 

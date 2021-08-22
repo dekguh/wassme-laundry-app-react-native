@@ -1,12 +1,13 @@
 import { withStyles, Text, Button } from '@ui-kitten/components'
 import React from 'react'
-import { View } from 'react-native'
+import { KeyboardAvoidingView, Platform, View, ScrollView } from 'react-native'
 import TextInput from '../input/TextInput'
 import PasswordInput from '../input/PasswordInput'
 
 const FormBilling = ({ eva, style, ...restProps }) => {
     return (
-        <View style={eva.style.container}>
+    <KeyboardAvoidingView style={eva.style.container} behavior={Platform.OS == 'ios' ? 'padding' : 'height'}>
+        <ScrollView>
             <Text category='s1' style={eva.style.titleForm}>Billing Information</Text>
 
             <TextInput
@@ -62,7 +63,8 @@ const FormBilling = ({ eva, style, ...restProps }) => {
             <Button>
                 Save
             </Button>
-        </View>
+        </ScrollView>
+    </KeyboardAvoidingView>
     )
 }
 
