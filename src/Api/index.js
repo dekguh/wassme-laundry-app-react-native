@@ -30,6 +30,23 @@ export async function loginApi(email, password) {
     }
 }
 
+export async function getBillingApi(jwt) {
+    try {
+        const response = await Api.get('billings', {
+            headers: {
+                Authorization: `Bearer ${jwt}`
+            }
+        })
+        const result = response.data
+        if(result.length == 1) {
+            return result
+        }
+        return null
+    } catch (err) {
+        return err.resposen.data.message[0].messages[0]
+    }
+}
+
 export async function updateBillingApi(data = {}, token) {
     try {
         
