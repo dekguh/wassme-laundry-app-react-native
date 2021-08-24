@@ -47,11 +47,29 @@ export async function getBillingApi(jwt) {
     }
 }
 
-export async function updateBillingApi(data = {}, token) {
+export async function updateBillingApi(id, data = {}, jwt) {
     try {
-        
+        const response = await Api.put(`billings/${id}`, data, {
+            headers: {
+                Authorization: `Bearer ${jwt}`
+            }
+        })
+        return response.data
     } catch (err) {
+        return err.response.data.message[0].messages[0]
+    }
+}
 
+export async function createBillingApi(data = {}, jwt) {
+    try {
+        const response = await Api.post(`billings`, data, {
+            headers: {
+                Authorization: `Bearer ${jwt}`
+            }
+        })
+        return response.data
+    } catch (err) {
+        return err.response.data.message[0].messages[0]
     }
 }
 

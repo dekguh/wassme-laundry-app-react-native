@@ -9,7 +9,7 @@ const initState = {
     isLoading: true,
     jwt: null,
     billing: null,
-    isBilling: false
+    isBilling: null
 }
 
 export default reduce = (state = initState, action) => {
