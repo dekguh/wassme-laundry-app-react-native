@@ -6,7 +6,7 @@ import TextInput from '../input/TextInput'
 import CardAlert from '../CardAlert'
 import { emailRegexValid, usernameRegexValid } from '../../Validation'
 import { loginApi } from '../../Api'
-import { setJwtStorage } from '../../storage'
+import { setDataUserStorage, setJwtStorage } from '../../storage'
 import { connect } from 'react-redux'
 import { updateIsLoginAct } from '../../redux/user/action'
 
@@ -116,7 +116,7 @@ const FormLogin = ({ updateIsLogin, navigation, eva, style, ...restProps}) => {
             }})
 
             await setJwtStorage(result.jwt)
-            console.log(result.jwt)
+            await setDataUserStorage(JSON.stringify(result.user))
             if(result.jwt) updateIsLogin(true)
         }
         loginUser()
