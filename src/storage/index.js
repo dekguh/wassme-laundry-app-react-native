@@ -8,6 +8,14 @@ export async function setJwtStorage(jwt) {
     }
 }
 
+export async function setDataUserStorage(data) {
+    try {
+        await AsyncStorage.setItem('@dataUser', data)
+    } catch(err) {
+        return null
+    }
+}
+
 export async function removeJwtStorage() {
     try {
         await AsyncStorage.removeItem('@jwt')
