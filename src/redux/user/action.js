@@ -4,6 +4,8 @@ export const CHECK_IS_LOGIN = 'CHECK_IS_LOGIN'
 export const UPDATE_JWT = 'UPDATE_JWT'
 export const UPDATE_BILLING = 'UPDATE_BILLING'
 export const UPDATE_IS_BILLING = 'UPDATE_IS_BILLING'
+export const UPDATE_DATA_USER = 'UPDATE_DATA_USER'
+export const CLEAR_ALL_GLOBAL_STATE = 'CLEAR_ALL_GLOBAL_STATE'
 
 export function updateIsLoginAct(status) {
     return {
@@ -37,5 +39,12 @@ export function updateIsBillingAct(status) {
     return {
         type: UPDATE_IS_BILLING,
         payload: status
+    }
+}
+
+export function updateDataUserAct(data) {
+    return {
+        type: UPDATE_DATA_USER,
+        payload: data
     }
 }
