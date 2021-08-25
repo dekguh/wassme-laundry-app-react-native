@@ -73,4 +73,19 @@ export async function createBillingApi(data = {}, jwt) {
     }
 }
 
+export async function changePasswordApi(newPassword, jwt) {
+    try {
+        const response = await Api.put('/users-permissions/users/update-password', {
+            newPassword,
+        }, {
+            headers: {
+                Authorization: `Bearer ${jwt}`
+            }
+        })
+        return response.data
+    } catch (err) {
+        return err.response.data.message[0].messages[0]
+    }
+}
+
 export default Api
