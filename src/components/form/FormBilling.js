@@ -1,21 +1,79 @@
 import { withStyles, Text, Button } from '@ui-kitten/components'
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { KeyboardAvoidingView, Platform, View, ScrollView } from 'react-native'
 import TextInput from '../input/TextInput'
 import PasswordInput from '../input/PasswordInput'
 import { connect } from 'react-redux'
 import CardAlert from '../CardAlert'
-import { createBillingApi, updateBillingApi } from '../../Api'
-import { updateBillingAct, updateIsBillingAct } from '../../redux/user/action'
+import { changePasswordApi, createBillingApi, loginApi, updateBillingApi } from '../../Api'
+import { CLEAR_ALL_GLOBAL_STATE, updateBillingAct, updateIsBillingAct, updateIsLoginAct } from '../../redux/user/action'
+import { CardModal } from '../CardModal'
+import { removeJwtStorage } from '../../storage'
 
-const FormBilling = ({ updateBillingAction, updateIsBillingAction, jwt, isBilling, billing, eva, style, ...restProps }) => {
+const FormBilling = ({ clearAllGlobalStateAction, dataUser, updateBillingAction, updateIsBillingAction, jwt, isBilling, billing, eva, style, ...restProps }) => {
     const [loadingBilling, setLoadingBilling] = useState(false)
+    const [loadingPassword, setLoadingPassword] = useState(false)
     const [dataBilling, setDataBilling] = useState({})
     const [dataPassword, setDataPassword] = useState({ newPassword: '', oldPassword: '' })
     const [msgBilling, setMsgBilling] = useState({
         type: '',
         message: ''
     })
+    const [msgPassword, setMsgPassword] = useState({
+        global: {
+            message: '',
+            valid: false,
+            type: 'danger'
+        },
+        newPassword: {
+            message: '',
+            valid: false
+        },
+        oldPassword: {
+            message: '',
+            valid: false
+        }
+    })
+
+    const newPasswordHandle = val => {
+        if(val.length < 6) return setMsgPassword({
+            ...msgPassword,
+            newPassword: {
+                message: 'password minimal 6 character',
+                valid: false
+            }
+        })
+
+        setDataPassword({ ...dataPassword, newPassword: val })
+
+        return setMsgPassword({
+            ...msgPassword,
+            newPassword: {
+                message: '',
+                valid: true
+            }
+        })
+    }
+
+    const oldPasswordHandle = val => {
+        if(val.length < 6) return setMsgPassword({
+            ...msgPassword,
+            oldPassword: {
+                message: 'password minimal 6 character',
+                valid: false
+            }
+        })
+
+        setDataPassword({ ...dataPassword, oldPassword: val })
+
+        return setMsgPassword({
+            ...msgPassword,
+            oldPassword: {
+                message: '',
+                valid: true
+            }
+        })
+    }
 
     const submitBillingHandle = e => {
         setLoadingBilling(true)
@@ -52,6 +110,68 @@ const FormBilling = ({ updateBillingAction, updateIsBillingAction, jwt, isBillin
             })
         }
         updateBilling()
+    }
+
+    const submitPasswordHandle = e => {
+        setLoadingPassword(true)
+        if(!msgPassword.newPassword.valid || !msgPassword.oldPassword.valid) return setMsgPassword({
+            ...msgPassword,
+            global: {
+                message: 'please check again form',
+                valid: false,
+                type: 'danger'
+            }
+        })
+
+        const changePassword = async () => {
+            const checkOldPass = await loginApi(dataUser.email, dataPassword.oldPassword)
+            setLoadingPassword(false)
+            if(!Number.isInteger(checkOldPass?.user?.id)) return setMsgPassword({
+                ...msgPassword,
+                global: {
+                    message: 'your old password is wrong',
+                    valid: false,
+                    type: 'danger'
+                }
+            })
+
+            const change = await changePasswordApi(dataPassword.newPassword, jwt)
+            if(change?.id == 'success.update.password.user') {
+                setMsgPassword({
+                    ...msgPassword,
+                    global: {
+                        message: change.message,
+                        valid: true,
+                        type: 'success'
+                    }
+                })
+
+                setTimeout(() => {
+                    setMsgPassword({
+                        ...msgPassword,
+                        global: {
+                            message: '',
+                            valid: false,
+                            type: 'danger'
+                        }
+                    })
+                }, 5000)
+
+                await removeJwtStorage()
+                return clearAllGlobalStateAction()
+            }
+
+            return setMsgPassword({
+                ...msgPassword,
+                global: {
+                    message: change.message,
+                    valid: false,
+                    type: 'danger'
+                }
+            })
+        }
+
+        changePassword()
     }
 
     return (
@@ -131,23 +251,36 @@ const FormBilling = ({ updateBillingAction, updateIsBillingAction, jwt, isBillin
             <Text category='s1' style={ eva.style.titleForm }>Update Password</Text>
             <Text category='s2' style={eva.style.description}>leave blank if you dont want change password</Text>
 
+            {msgPassword.global.message.length > 0 && (
+                <CardAlert styling={{ marginBottom: 15 }} type={msgPassword.global.type} text={msgPassword.global.message} />
+            )}
+
             <PasswordInput
                 label='New Password'
                 placeholder='password'
                 style={{ marginBottom: 15 }}
+                onChangeText={newPasswordHandle}
             />
-            <CardAlert styling={{ marginBottom: 15 }} type='danger' text='tes' />
+            {msgPassword.newPassword.message.length > 0
+            && (<CardAlert styling={{ marginBottom: 15 }} type='danger' text={msgPassword.newPassword.message} />)}
 
             <PasswordInput
                 label='Old Password'
                 placeholder='password'
                 style={{ marginBottom: 15 }}
+                onChangeText={oldPasswordHandle}
             />
-            <CardAlert styling={{ marginBottom: 15 }} type='danger' text='tes' />
+            {msgPassword.oldPassword.message.length > 0
+            && (<CardAlert styling={{ marginBottom: 15 }} type='danger' text={msgPassword.newPassword.oldPassword} />)}
 
-            <Button>
-                Save Password
+            <Button onPress={submitPasswordHandle}>
+                {loadingPassword
+                ? 'Saving...'
+                : 'Save Password'}
             </Button>
+
+            {msgPassword.global.valid &&
+            (<CardModal visible={true} text='success change password, you will be logged out automatically' />)}
         </ScrollView>
     </KeyboardAvoidingView>
     )
@@ -173,7 +306,8 @@ const mapStateToProps = state => {
     return {
         jwt: state.user.jwt,
         isBilling: state.user.isBilling,
-        billing: state.user.billing
+        billing: state.user.billing,
+        dataUser: state.user.dataUser
     }
 }
 
@@ -181,6 +315,7 @@ const mapDispatchToProps = dispatch => {
     return {
         updateBillingAction: data => dispatch(updateBillingAct(data)),
         updateIsBillingAction: status => dispatch(updateIsBillingAct(status)),
+        clearAllGlobalStateAction: () => dispatch({ type: CLEAR_ALL_GLOBAL_STATE })
     }
 }
 
