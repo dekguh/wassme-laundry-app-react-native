@@ -11,9 +11,18 @@ import { CardModal } from '../CardModal'
 import { removeJwtStorage } from '../../storage'
 
 const FormBilling = ({ clearAllGlobalStateAction, dataUser, updateBillingAction, updateIsBillingAction, jwt, isBilling, billing, eva, style, ...restProps }) => {
+    const { name, address, subdistrict, district, province, postalCode, phone } = billing
     const [loadingBilling, setLoadingBilling] = useState(false)
     const [loadingPassword, setLoadingPassword] = useState(false)
-    const [dataBilling, setDataBilling] = useState({})
+    const [dataBilling, setDataBilling] = useState({
+        name,
+        address,
+        subdistrict,
+        district,
+        province,
+        postalCode,
+        phone,
+    })
     const [dataPassword, setDataPassword] = useState({ newPassword: '', oldPassword: '' })
     const [msgBilling, setMsgBilling] = useState({
         type: '',
@@ -79,10 +88,10 @@ const FormBilling = ({ clearAllGlobalStateAction, dataUser, updateBillingAction,
         setLoadingBilling(true)
         const updateBilling = async () => {
             let entity
-            setLoadingBilling(false)
 
             if(isBilling) { // have billing
                 entity = await updateBillingApi(billing.id, dataBilling, jwt)
+                setLoadingBilling(false)
                 if(Number.isInteger(entity.id)) {
                     updateBillingAction(entity)
                     return setMsgBilling({
@@ -94,6 +103,7 @@ const FormBilling = ({ clearAllGlobalStateAction, dataUser, updateBillingAction,
 
             if(!isBilling) { // dont have billing
                 entity = await createBillingApi(dataBilling, jwt)
+                setLoadingBilling(false)
                 if(Number.isInteger(entity.id)) {
                     updateBillingAction(entity)
                     updateIsBillingAction(true)
@@ -191,7 +201,7 @@ const FormBilling = ({ clearAllGlobalStateAction, dataUser, updateBillingAction,
                 placeholder='ex: Dek Guh'
                 style={{ marginBottom: 15 }}
                 onChangeText={val => setDataBilling({ ...dataBilling, name: val })}
-                value={dataBilling?.name || billing?.name}
+                value={dataBilling?.name}
             />
 
             <TextInput
@@ -199,7 +209,7 @@ const FormBilling = ({ clearAllGlobalStateAction, dataUser, updateBillingAction,
                 placeholder='ex: Jalan Bypass Ngurah Rai, depan toko bagunan'
                 style={{ marginBottom: 15 }}
                 onChangeText={val => setDataBilling({ ...dataBilling, address: val })}
-                value={dataBilling?.address || billing?.address}
+                value={dataBilling?.address}
             />
 
             <TextInput
@@ -207,7 +217,7 @@ const FormBilling = ({ clearAllGlobalStateAction, dataUser, updateBillingAction,
                 placeholder='ex: Kuta Selatan'
                 style={{ marginBottom: 15 }}
                 onChangeText={val => setDataBilling({ ...dataBilling, subdistrict: val })}
-                value={dataBilling?.subdistrict || billing?.subdistrict}
+                value={dataBilling?.subdistrict}
             />
 
             <TextInput
@@ -215,7 +225,7 @@ const FormBilling = ({ clearAllGlobalStateAction, dataUser, updateBillingAction,
                 placeholder='ex: Badung'
                 style={{ marginBottom: 15 }}
                 onChangeText={val => setDataBilling({ ...dataBilling, district: val })}
-                value={dataBilling?.district || billing?.district}
+                value={dataBilling?.district}
             />
 
             <TextInput
@@ -223,7 +233,7 @@ const FormBilling = ({ clearAllGlobalStateAction, dataUser, updateBillingAction,
                 placeholder='ex: Bali'
                 style={{ marginBottom: 15 }}
                 onChangeText={val => setDataBilling({ ...dataBilling, province: val })}
-                value={dataBilling?.province || billing?.province}
+                value={dataBilling?.province}
             />
 
             <TextInput
@@ -231,7 +241,7 @@ const FormBilling = ({ clearAllGlobalStateAction, dataUser, updateBillingAction,
                 placeholder='ex: 80361'
                 style={{ marginBottom: 15 }}
                 onChangeText={val => setDataBilling({ ...dataBilling, postalCode: val })}
-                value={dataBilling?.postalCode || billing?.postalCode}
+                value={dataBilling?.postalCode}
             />
 
             <TextInput
@@ -239,7 +249,7 @@ const FormBilling = ({ clearAllGlobalStateAction, dataUser, updateBillingAction,
                 placeholder='ex: +62123456789'
                 style={{ marginBottom: 15 }}
                 onChangeText={val => setDataBilling({ ...dataBilling, phone: val })}
-                value={dataBilling?.phone || billing?.phone}
+                value={dataBilling?.phone}
             />
 
             <Button style={{ marginBottom: 15 }} onPress={submitBillingHandle}>
