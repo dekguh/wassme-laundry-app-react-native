@@ -1,7 +1,5 @@
 import React, { useState } from 'react'
 import { StyleSheet, View, Text } from 'react-native'
-import RegisterScreen from '../components/screens/RegisterScreen';
-import FormLogin from '../components/form/FormLogin';
 import { Button } from '@ui-kitten/components';
 
 const AuthTopBars = ({ navigation, onChangeCurrent, currentScreen }) => {
