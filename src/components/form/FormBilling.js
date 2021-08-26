@@ -1,4 +1,4 @@
-import { withStyles, Text, Button } from '@ui-kitten/components'
+import { withStyles, Text, Button, Divider } from '@ui-kitten/components'
 import React, { useState } from 'react'
 import { KeyboardAvoidingView, Platform, View, ScrollView } from 'react-native'
 import TextInput from '../input/TextInput'
@@ -14,6 +14,7 @@ const FormBilling = ({ clearAllGlobalStateAction, dataUser, updateBillingAction,
     const { name, address, subdistrict, district, province, postalCode, phone } = billing
     const [loadingBilling, setLoadingBilling] = useState(false)
     const [loadingPassword, setLoadingPassword] = useState(false)
+    const [loadingLogout, setLoadingLogout] = useState(false)
     const [dataBilling, setDataBilling] = useState({
         name,
         address,
@@ -184,6 +185,16 @@ const FormBilling = ({ clearAllGlobalStateAction, dataUser, updateBillingAction,
         changePassword()
     }
 
+    const logoutHandle = e => {
+        setLoadingLogout(true)
+        const logout = async () => {
+            await removeJwtStorage()
+            setLoadingLogout(false)
+            return clearAllGlobalStateAction()
+        }
+        logout()
+    }
+
     return (
     <KeyboardAvoidingView style={eva.style.container} behavior={Platform.OS == 'ios' ? 'padding' : 'height'}>
         <ScrollView>
@@ -258,6 +269,8 @@ const FormBilling = ({ clearAllGlobalStateAction, dataUser, updateBillingAction,
                 : 'Save Billing'}
             </Button>
 
+            <Divider style={{ marginTop: 20, marginBottom: 25 }} />
+
             <Text category='s1' style={ eva.style.titleForm }>Update Password</Text>
             <Text category='s2' style={eva.style.description}>leave blank if you dont want change password</Text>
 
@@ -291,6 +304,17 @@ const FormBilling = ({ clearAllGlobalStateAction, dataUser, updateBillingAction,
 
             {msgPassword.global.valid &&
             (<CardModal visible={true} text='success change password, you will be logged out automatically' />)}
+
+            <Divider style={{ marginTop: 35, marginBottom: 25 }} />
+
+            <Text category='s1' style={ eva.style.titleForm }>Account</Text>
+            <Text category='s2' style={eva.style.description}>logout from account, you will redirect to login</Text>
+
+            <Button onPress={logoutHandle}>
+                {loadingLogout
+                ? 'Process...'
+                : 'Logout'}
+            </Button>
         </ScrollView>
     </KeyboardAvoidingView>
     )
