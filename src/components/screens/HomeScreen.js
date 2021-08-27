@@ -1,11 +1,10 @@
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
+import HomeContainer from '../container/HomeContainer'
 
 const HomeScreen = () => {
     return (
-        <View>
-            <Text>home screen</Text>
-        </View>
+        <HomeContainer />
     )
 }
 
