@@ -18,7 +18,7 @@ const CardPromo = ({ eva, style, title, code, dateExpired }) => {
         }}>
             <Layout style={eva.style.contentWrap}>
                 <Layout style={eva.style.layoutTitle}>
-                    <Text category='h5' style={eva.style.title}>CLAIM NOW</Text>
+                    <Text category='h6' style={eva.style.title}>CLAIM NOW</Text>
                     <Text category='s1' style={eva.style.subtitle}>{title}</Text>
                 </Layout>
 
