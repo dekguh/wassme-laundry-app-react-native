@@ -1,11 +1,10 @@
 import React from 'react'
 import { View, Text } from 'react-native'
+import TransactionContainer from '../container/TransactionContainer'
 
 const TransactionScreen = () => {
     return (
-        <View>
-            <Text>Transaction</Text>
-        </View>
+        <TransactionContainer />
     )
 }
 
