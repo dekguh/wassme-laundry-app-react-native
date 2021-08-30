@@ -25,7 +25,7 @@ const CardNotif = ({ eva, style, description, date }) => {
             </Layout>
 
             <Layout style={eva.style.layoutContent}>
-                <Text category='p1' style={eva.style.description}>
+                <Text category='s2' style={eva.style.description}>
                     {description}
                 </Text>
                 <View style={{
@@ -79,8 +79,8 @@ const ThemedCardNotif = withStyles(CardNotif, (theme) => ({
         backgroundColor: theme['color-primary-500'],
         paddingTop: 16,
         paddingBottom: 16,
-        paddingLeft: 21,
-        paddingRight: 21,
+        paddingLeft: 15,
+        paddingRight: 15,
         borderRadius: 4
     },
     description: {
