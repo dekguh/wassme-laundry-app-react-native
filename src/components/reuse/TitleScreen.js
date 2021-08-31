@@ -5,7 +5,7 @@ import { View } from 'react-native'
 const TitleScreen = ({ title, eva, style, ...restProps }) => {
     return (
         <View {...restProps} style={{ marginBottom: 20 }}>
-            <Text category='h6' style={eva.style.title}>{title}</Text>
+            <Text category='h6' style={{ ...eva.style.title, ...style }}>{title}</Text>
         </View>
     )
 }
