@@ -4,8 +4,10 @@ import { Pressable, View } from 'react-native'
 
 import 'intl'
 import 'intl/locale-data/jsonp/en'
+import { useNavigation } from '@react-navigation/native'
 
 const CardTransaction = ({ eva, style, orderId, date, totalPayment, status }) => {
+    const Navigation = useNavigation()
     return (
         <Layout style={{ ...eva.style.wrapper, ...style }}>
             <Layout style={eva.style.layoutDetail}>
@@ -16,7 +18,7 @@ const CardTransaction = ({ eva, style, orderId, date, totalPayment, status }) =>
                         </View>
                     </View>
                     <View style={eva.style.informationWrap}>
-                        <Pressable onPress={e => console.log('press')}>
+                        <Pressable onPress={e => Navigation.navigate('TransactionDetail')}>
                             <Text style={eva.style.textOrder} category='s1'>#{orderId || '-'}</Text>
                         </Pressable>
                         <View>
