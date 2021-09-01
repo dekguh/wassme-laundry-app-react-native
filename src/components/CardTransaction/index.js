@@ -18,7 +18,7 @@ const CardTransaction = ({ eva, style, orderId, date, totalPayment, status }) =>
                         </View>
                     </View>
                     <View style={eva.style.informationWrap}>
-                        <Pressable onPress={e => Navigation.navigate('TransactionDetail')}>
+                        <Pressable onPress={e => Navigation.navigate('TransactionDetail', { orderId: orderId })}>
                             <Text style={eva.style.textOrder} category='s1'>#{orderId || '-'}</Text>
                         </Pressable>
                         <View>

@@ -2,10 +2,11 @@ import React from 'react'
 import { View, Text, ScrollView } from 'react-native'
 import TransactionDetailContainer from '../container/TransactionDetailContainer'
 
-const TransactionDetailScreen = () => {
+const TransactionDetailScreen = ({ route }) => {
+    const { orderId } = route.params
     return (
         <ScrollView>
-            <TransactionDetailContainer />
+            <TransactionDetailContainer orderId={orderId} />
         </ScrollView>
     )
 }

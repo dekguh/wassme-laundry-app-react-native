@@ -23,7 +23,7 @@ const dataDetail = {
     }
 }
 
-const TransactionDetailContainer = ({ eva, style }) => {
+const TransactionDetailContainer = ({ eva, style, orderId }) => {
     return (
         <Layout style={eva.style.container}>
             <HeaderDetail />

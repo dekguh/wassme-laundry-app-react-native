@@ -76,7 +76,7 @@ const SuccessPayment = ({ eva, style, transaction }) => {
 
                     <View style={eva.style.layoutContent}>
                         <Text category='s1' style={eva.style.infoDescription}>
-                            #12345
+                            #{transaction.orderId}
                         </Text>
                         <Text category='s2' style={{ ...eva.style.infoDescription, marginBottom: 2 }}>
                             {transaction.billing.name}
