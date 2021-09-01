@@ -15,7 +15,7 @@ const Detail = ({ eva, style, transaction }) => {
 
             {transaction.statusPayment == 'waiting payment'
             ? (<WaitingPayment />)
-            : (<SuccessPayment />)}
+            : (<SuccessPayment transaction={transaction} />)}
         </View>
     )
 }

@@ -7,9 +7,20 @@ import HeaderDetail from './transaction/HeaderDetail'
 const dataDetail = {
     id: 1,
     orderId: 13948,
-    statusPayment: 'process',
+    statusPayment: 'delivered',
     date: 1629954703,
-    totalPayment: 50000
+    totalPayment: 45000,
+    totalWeight: 3,
+    pricePerWeight: 15000,
+    billing: {
+        name: 'I Kadek Teguh Mahesa',
+        address: 'Jalan bypass ngurah rai lingk. bualu',
+        subdistrict: 'kuta selatan',
+        district: 'badung',
+        province: 'bali',
+        postalCode: '80361',
+        phone: '+62123456789'
+    }
 }
 
 const TransactionDetailContainer = ({ eva, style }) => {
