@@ -1,11 +1,12 @@
 import React from 'react'
-import { View, Text } from 'react-native'
+import { ScrollView } from 'react-native'
+import OrderContainer from '../container/OrderContainer'
 
 const OrderScreen = () => {
     return (
-        <View>
-            <Text>Order</Text>
-        </View>
+        <ScrollView contentContainerStyle={{ minHeight: '100%' }}>
+            <OrderContainer />
+        </ScrollView>
     )
 }
 
