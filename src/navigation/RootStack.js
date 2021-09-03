@@ -9,6 +9,7 @@ import AuthStack from './AuthStack'
 import { updateIsLoadingAct, updateIsLoginAct } from '../redux/user/action'
 import LogoutScreen from '../components/screens/LogoutScreen'
 import TransactionDetailScreen from '../components/screens/TransactionDetailScreen'
+import CheckoutScreen from '../components/screens/CheckoutScreen'
 
 const Stack = createNativeStackNavigator()
 
@@ -26,6 +27,7 @@ const RootStack = ({ isLogin, isLoading, checkIsLogin }) => {
                 <>
                     <Stack.Screen name='Dashboard' component={DashboardStack} />
                     <Stack.Screen name='TransactionDetail' component={TransactionDetailScreen} />
+                    <Stack.Screen name='Checkout' component={CheckoutScreen} />
                 </>
                 )
             : (<Stack.Screen name='Auth' component={AuthStack} />)}

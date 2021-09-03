@@ -4,8 +4,10 @@ import { View } from 'react-native'
 import CardOrder from '../CardOrder'
 import TitleScreen from '../reuse/TitleScreen'
 import TextInput from '../input/TextInput'
+import { useNavigation } from '@react-navigation/core'
 
 const OrderContainer = ({ eva, style }) => {
+    const navigation = useNavigation()
     return (
         <View style={eva.style.container}>
             <TitleScreen title='Order' />
@@ -104,8 +106,8 @@ const OrderContainer = ({ eva, style }) => {
             </View>
 
             <View style={{ marginBottom: 20 }}>
-                <Button>
-                    <Text>Pay Now</Text>
+                <Button onPress={e => navigation.navigate('Checkout')}>
+                    <Text>Next Step</Text>
                 </Button>
             </View>
         </View>
